@@ -1,17 +1,20 @@
 {
-  "name": "newPrisma",
+  "name": "Social-RSS-reader",
   "version": "1.0.0",
-  "description": "",
+  "description": "feature-packed application from the ground up using next.js,prisma,graphql",
   "main": "index.js",
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "prisma:init": "prisma init",
+    "prisma:migrate": "prisma migrate dev --preview-feature"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@prisma/client": "^2.17.0",
     "next": "^10.0.7",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
@@ -19,6 +22,7 @@
   "devDependencies": {
     "@types/node": "^14.14.31",
     "@types/react": "^17.0.2",
+    "prisma": "^2.17.0",
     "typescript": "^4.1.5"
   }
 }
