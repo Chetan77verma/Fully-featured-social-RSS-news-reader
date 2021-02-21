@@ -1,7 +1,7 @@
 
 
 export const resolvers = {
-   Query:{
-      hello : (parent,args,context) => 'Hi!'
+   Query: {
+      hello: (parent, args, context) => 'Hi!'
    }
 }
