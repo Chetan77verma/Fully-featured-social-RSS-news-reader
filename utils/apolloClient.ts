@@ -1,7 +1,8 @@
 import { useMemo } from 'react'
 import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client'
 import getConfig from 'next/config'
-
+import merge from 'deepmerge'
+import isEqual from 'lodash/isEqual'
 const { publicRuntimeConfig } = getConfig();
 const { BACKEND_URL } = publicRuntimeConfig
 let apolloClient
@@ -26,9 +27,17 @@ export function initializeApollo(initialState = null) {
       // Get existing cache, loaded during client side data fetching
       const existingCache = _apolloClient.extract()
 
-
+      const data = merge(initialState, existingCache, {
+         // combine arrays using object equality (like in sets)
+         arrayMerge: (destinationArray, sourceArray) => [
+            ...sourceArray,
+            ...destinationArray.filter((d) =>
+               sourceArray.every((s) => !isEqual(d, s))
+            ),
+         ],
+      })
       // Restore the cache with the merged data
-      _apolloClient.cache.restore(...existingCache, ...initialState)
+      _apolloClient.cache.restore(data)
    }
    // For SSG and SSR always create a new Apollo Client
    if (typeof window === 'undefined') return _apolloClient
